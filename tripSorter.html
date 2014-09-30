@@ -1,0 +1,37 @@
+﻿<html>
+<body>
+<script src="tripSorter.js"></script>
+<script>
+Array.prototype.shuffle = function () {
+    var i = this.length, j, tmp;
+    if (i == 0) { return this; }
+    while (--i) {
+        j = Math.floor(Math.random() * (i + 1));
+        tmp = this[i]; this[i] = this[j]; this[j] = tmp;
+    }
+    return this;
+}
+var cards_array =
+    [{ from: "Madrid", to: "Dublin" ,transport: 0, seat: "7", gate: "22"},
+    { from: "Rome", to: "London", transport: 1 },
+    { from: "London", to: "Berlin", transport: 0 },
+    { from: "Oslo", to: "Moscow", transport: 1 },
+    { from: "Moscow", to: "Riga", comment: "Baggage drop at ticket counter 344.", transport: 0 },
+    { from: "Dublin", to: "Stockholm", transport: 1 },
+    { from: "Paris", to: "Madrid", transport: 1 },
+    { from: "Berlin", to: "Paris", transport: 0 },
+    { from: "Riga", to: "Rome", transport: 0 }];
+cards_array.shuffle();
+for (i = 0; i < cards_array.length; i++)
+{
+    cards_array[i].seat = Math.floor(Math.random() * 40);
+    if ((cards_array[i].transport == 0) && (i > 5))
+        cards_array[i].flight = Math.floor(Math.random() * (200 - 100) + 100);
+    if ((cards_array[i].transport == 1)&& (i> Math.floor(Math.random() * 6)))
+        cards_array[i].train = '"' + cards_array[Math.floor(Math.random() * cards_array.length)].from + " ==> " + cards_array[Math.floor(Math.random() * cards_array.length)].from + '"';
+}
+var message = tripSorter(cards_array);
+document.write(message);
+</script>
+</body>
+</html>
